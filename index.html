@@ -28,9 +28,15 @@
 
 <body>
     <div class="container cbody">
+        <div class="card-panel center-align teal lighten-2">
+            <h4>I N V O I C E</h4>
+        </div>
         <!-- Invoice Head Start -->
         <div class="invoiceHead">
             <div class="row">
+               
+            
+
                 <div class="col s3">
                     <table class="highlight">
                         <tr>
@@ -107,8 +113,8 @@
                             <td><input placeholder="Discount" onkeyup="calTotal()" id="discount" type="text" class="validate" value="0"></td>
                         </tr>
                         <tr>
-                            <td> <a id="addrow" class="btn-floating waves-effect waves-light red"><i class="material-icons">add</i></a> </td>
-                            <td> <a id="deleterow" class="btn-floating  waves-effect waves-light red"><i class="material-icons">remove</i></a> </td>
+                            <td><a id="add-row" class="btn-floating waves-effect waves-light"><i class="material-icons">add</i></a></td>
+                            <td><a id="delete-row" class="btn-floating  waves-effect waves-light"><i class="material-icons">remove</i></a></td>
                             <td></td>
                             <td></td>
                             <td>Total</td>
@@ -118,6 +124,9 @@
                 </div>
             </div>
         </div> <!-- Invoice Body End-->
+
+        <div class="card-panel center-align teal lighten-2">Devloped By: B374D3D</div>
+            
 
     </div>
 
@@ -141,26 +150,27 @@
 </script>
 
 <script>
-    var tableRow = document.getElementById("invoiceTable").rows.length;
+    var tableRow = document.getElementById("invoiceTable").rows.length;  //Calculate Table Row
     console.log(tableRow);
 
     $(document).ready(function () {
-        $("#addrow").click(function () {
+        //Add Table Row
+        $("#add-row").click(function () {
             var markup ='<tr> <td> <p> <label> <input type="checkbox" name="record" /> <span></span> </label> </p> </td> <td colspan="2"><textarea class="materialize-textarea"></textarea></td> <td><input onkeyup="getData()" placeholder="Price" type="text" class="validate product-price"></td> <td><input onkeyup="getData()" placeholder="Quantity" type="text" class="validate product-quantity"></td> <td><input placeholder="Total" type="text" class="validate total-price" readonly></td> </tr>';
 
             $("#addCol").append(markup);
-
-            tableRow = document.getElementById("invoiceTable").rows.length;
+            //Again Calculate Table Row Beccause After Add Row Increase Number
+            tableRow = document.getElementById("invoiceTable").rows.length; 
             //console.log(tableRow);
         });
 
-
-        $("#deleterow").click(function () {
+        //Remove Table Row
+        $("#delete-row").click(function () {
             $("table tbody").find('input[name="record"]').each(function () {
                 if ($(this).is(":checked")) {
                     $(this).parents("tr").remove();
 
-                    tableRow = document.getElementById("invoiceTable").rows.length;
+                    tableRow = document.getElementById("invoiceTable").rows.length; //After Remove Row Decrease Row Number
                     //console.log(tableRow);
                     getData();
                 }
