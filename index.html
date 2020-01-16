@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Automated Invoice</title>
+
+    <!-- Jquery CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- Material Icon CDN -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- External Js -->
+    <script src="app.js"></script>
+    <!-- <link rel="shortcut icon" href="icon.png" type="image/x-icon"> -->
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<style>
+
+</style>
+
+<body>
+    <div class="container cbody">
+        <!-- Invoice Head Start -->
+        <div class="invoiceHead">
+            <div class="row">
+                <div class="col s3">
+                    <table class="highlight">
+                        <tr>
+                            <td>Invoice</td>
+                            <td><input placeholder="Invoice No" id="" type="text" class="validate" readonly></td>
+
+                        </tr>
+                        <tr>
+                            <td>Date</td>
+                            <td><input type="text" class="datepicker"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col s4">
+
+                </div>
+                <div class="col s2">
+
+                </div>
+                <div class="col s3">
+
+                </div>
+            </div>
+        </div> <!-- Invoice Head End -->
+
+        <div class="invoiceBody">
+            <div class="row">
+                <div class="col s12">
+                    <table class="striped" id="invoiceTable">
+                        <thead>
+                            <tr>
+                                <th>Select</th>
+                                <th>Product Desciption</th>
+                                <th>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
+                                <th>Unit Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="addCol">
+
+                            <tr>
+                                <td>
+                                    <p>
+                                        <label>
+                                            <input type="checkbox" name="record" />
+                                            <span></span>
+                                        </label>
+                                    </p>
+                                </td>
+                                <td colspan="2"><textarea class="materialize-textarea"></textarea></td>
+                                <td> <input onkeyup="getData()" placeholder="Price" type="text" class="validate product-price"> </td>
+                                <td> <input onkeyup="getData()" placeholder="Quantity" type="text" class="validate product-quantity"> </td>
+                                <td> <input placeholder="Total" type="text" class="validate total-price" readonly> </td>
+                            </tr>
+
+
+                        </tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Sub-Total</td>
+                            <td> <input placeholder="Sub-Total" id="subTotal" type="text" class="validate" readonly> </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Discount</td>
+                            <td><input placeholder="Discount" onkeyup="calTotal()" id="discount" type="text" class="validate" value="0"></td>
+                        </tr>
+                        <tr>
+                            <td> <a id="addrow" class="btn-floating waves-effect waves-light red"><i class="material-icons">add</i></a> </td>
+                            <td> <a id="deleterow" class="btn-floating  waves-effect waves-light red"><i class="material-icons">remove</i></a> </td>
+                            <td></td>
+                            <td></td>
+                            <td>Total</td>
+                            <td> <input placeholder="Total" id="finaltotal" type="text" class="validate" readonly> </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div> <!-- Invoice Body End-->
+
+    </div>
+
+
+</body>
+
+</html>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.datepicker');
+        var instances = M.Datepicker.init(elems, options);
+    });
+
+    // Or with jQuery
+
+    $(document).ready(function () {
+        $('.datepicker').datepicker();
+    });
+</script>
+
+<script>
+    var tableRow = document.getElementById("invoiceTable").rows.length;
+    console.log(tableRow);
+
+    $(document).ready(function () {
+        $("#addrow").click(function () {
+            var markup ='<tr> <td> <p> <label> <input type="checkbox" name="record" /> <span></span> </label> </p> </td> <td colspan="2"><textarea class="materialize-textarea"></textarea></td> <td><input onkeyup="getData()" placeholder="Price" type="text" class="validate product-price"></td> <td><input onkeyup="getData()" placeholder="Quantity" type="text" class="validate product-quantity"></td> <td><input placeholder="Total" type="text" class="validate total-price" readonly></td> </tr>';
+
+            $("#addCol").append(markup);
+
+            tableRow = document.getElementById("invoiceTable").rows.length;
+            //console.log(tableRow);
+        });
+
+
+        $("#deleterow").click(function () {
+            $("table tbody").find('input[name="record"]').each(function () {
+                if ($(this).is(":checked")) {
+                    $(this).parents("tr").remove();
+
+                    tableRow = document.getElementById("invoiceTable").rows.length;
+                    //console.log(tableRow);
+                    getData();
+                }
+            });
+        });
+
+    });
+</script>
